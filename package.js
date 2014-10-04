@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Simple but flexible Flash messages for Meteor, compatible with Iron-Router, Bootstrap, Foundation or custom styling.",
+  summary: "Simple Flash messages for Meteor, compatible with Iron-Router, Bootstrap, and Foundation.",
   version: "0.2.1",
   git: "https://github.com/nxio/meteor-flash"
 });

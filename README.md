@@ -16,7 +16,7 @@
 - Delayed flash message clearing (disabled by default)
 
 #### Install
-`mrt add flash`
+`meteor add naxio:flash`
 
 
 #### Set flash message

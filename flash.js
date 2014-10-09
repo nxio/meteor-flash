@@ -43,7 +43,11 @@ var flashSet = function (id, message, localTimeout) {
   var timeout = localTimeout || Flash.config.timeout,
       timer;
 
-  Flash.messages[id] = message;
+  Flash.messages[id] = {
+    level: message[0],
+    message: message[1],
+    timestamp: Date.now()
+  };
   flashDeps.changed();
 
   if (timeout) {
@@ -104,7 +108,6 @@ Flash.danger = flashStateFn('danger');
 Flash.get = function (id) {
   flashDeps.depend();
   id = id || FLASH_DEFAULT_ID;
-
   return Flash.messages[id];
 };
 

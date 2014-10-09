@@ -1,6 +1,7 @@
 Package.describe({
+  name: "naxio:flash",
   summary: "Simple Flash messages for Meteor, compatible with Iron-Router, Bootstrap, and Foundation.",
-  version: "0.2.1",
+  version: "0.2.2",
   git: "https://github.com/nxio/meteor-flash"
 });
 

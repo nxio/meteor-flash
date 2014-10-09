@@ -7,15 +7,15 @@ UI.registerHelper('flash', function (id) {
     return '';
   }
 
-  var type        = flash[0],
-      msg         = flash[1],
+  var type        = flash.level,
+      msg         = flash.message,
       profile     = Flash.config.profile,
       classes     = profile.classes,
       classesLen  = classes.length,
       attrs       = profile.attributes,
       closeButton = profile.closeButton,
       classesStr  = '',
-      attrStr     = '',
+      attrStr     = 'data-timestamp="' + flash.timestamp + '" ',
       openTag, closeTag, tmpl, i, key, val;
 
 

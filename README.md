@@ -2,8 +2,6 @@
 
 ### Flexible Flash messages for Meteor
 
-**Version: 0.2.1**
-
 #### Features
 
 - Automatically detects CSS Framework (Bootstrap, Foundation) and styles flash messages accordingly

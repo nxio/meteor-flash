@@ -2,6 +2,14 @@
 
 ### Flexible Flash messages for Meteor
 
+Smart package to display easily simple flash message in your Meteor app.
+
+The package has been created initially by [@MixinLabs](https://github.com/MixinLabs) and the original version is available at [https://github.com/MixinLabs/meteor-flash](https://github.com/MixinLabs/meteor-flash). Compared to the original package, this version features:
+
+- compatibility with Meteor 0.9
+- timestamps for management of repeated messages, contributed by [@yourcelf](https://github.com/yourcelf).
+
+
 #### Features
 
 - Automatically detects CSS Framework (Bootstrap, Foundation) and styles flash messages accordingly

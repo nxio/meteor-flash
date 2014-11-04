@@ -88,7 +88,7 @@ function autoDetectProfile() {
 // Clear Flash messages on page-change
 function injectRouter() {
   if (typeof(Router) !== 'undefined' && Router.routes) {
-    Router.onBeforeAction(function () { Flash.clear(); });
+    Router.onBeforeAction(function () { Flash.clear(); this.next(); });
   }
 }
 

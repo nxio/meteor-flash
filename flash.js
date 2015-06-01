@@ -97,13 +97,22 @@ Meteor.startup(function () {
   injectRouter();
 });
 
+// Allow custom states
+Flash.registerStateFn = function (fnName, state) {
+  if (typeof(state) === 'undefined')
+    state = fnName;
 
+  if (typeof(Flash[fnName]) === 'undefined')
+    Flash[fnName] = flashStateFn(state);
+  else
+    console.error("Flash." + fnName + " cannot be registered, because it already exists.")
+};
 
-Flash.set = flashStateFn(Flash.config.defaultType);
-Flash.warning = flashStateFn('warning');
-Flash.success = flashStateFn('success');
-Flash.info = flashStateFn('info');
-Flash.danger = flashStateFn('danger');
+Flash.registerStateFn('set', Flash.config.defaultType);
+Flash.registerStateFn('warning');
+Flash.registerStateFn('success');
+Flash.registerStateFn('info');
+Flash.registerStateFn('danger');
 
 Flash.get = function (id) {
   flashDeps.depend();

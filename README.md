@@ -42,6 +42,8 @@ The package has been created initially by [@MixinLabs](https://github.com/MixinL
 * `Flash.info([id], message, [timeout])`
 * `Flash.danger([id], message, [timeout])`
 
+*Custom* variants can be registered using `Flash.registerStateFn("name of the state")` for when your CSS framework has different flash message state classes.
+
 #### Template helpers
 
 Simply use `{{flash id}}` helper to display flash message. **id** parameter is optional, defaults to `__default__`.

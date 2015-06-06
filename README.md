@@ -14,6 +14,7 @@ The package has been created initially by [@MixinLabs](https://github.com/MixinL
 
 - Automatically detects CSS Framework (Bootstrap, Foundation) and styles flash messages accordingly
 - If [IronRouter](https://github.com/EventedMind/iron-router) is present, flash messages will be cleared on page-change (otherwise, you will need to implement this logic yourself)
+	- You can make a message persist **one** route (for example, submitting a form that, on success, redirects to the overview page) by setting the fourth parameter `persist` to `true`
 - Multiple profile support. Comes with three profiles out-of-the-box
 	- **bootstrap** - Styling for Bootstrap CSS Framework
 	- **foundation** - Styling Zurb Foundation
@@ -27,13 +28,14 @@ The package has been created initially by [@MixinLabs](https://github.com/MixinL
 
 #### Set flash message
 
-`Flash.set([id], message, [timeout])` - Same as calling `Flash.warning(id, message, [timeout])`.
+`Flash.set([id], message, [timeout], [persist])` - Same as calling `Flash.warning(id, message, [timeout], [persist])`.
 
 **Parameters:**
 
 * `id` *(optional, defaults to `__default__`)*  - assigns an id to a message. Helpful for multiple flash messages on the same page.
 * `message` - Flash message
 * `timeout` - *In miliseconds*, clears this flash message after a specified amount of time. [Read more..](#clearing)
+* `persist` - When set to `true` (and using [IronRouter](https://github.com/EventedMind/iron-router)), make this message persist **one** route (for example, submitting a form that, on success, redirects to the overview page). Otherwise the message is cleared on route change.
 
 **Function variants according to flash message state:** 
 
@@ -41,6 +43,8 @@ The package has been created initially by [@MixinLabs](https://github.com/MixinL
 * `Flash.success([id], message, [timeout])`
 * `Flash.info([id], message, [timeout])`
 * `Flash.danger([id], message, [timeout])`
+
+*Custom* variants can be registered using `Flash.registerStateFn("name of the state")` for when your CSS framework has different flash message state classes.
 
 #### Template helpers
 

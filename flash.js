@@ -39,14 +39,15 @@ Flash.switchProfile = function (profileName) {
   Flash.config.profile = Flash.profiles[profileName];
 };
 
-var flashSet = function (id, message, localTimeout) {
+var flashSet = function (id, message, localTimeout, persist) {
   var timeout = localTimeout || Flash.config.timeout,
       timer;
 
   Flash.messages[id] = {
     level: message[0],
     message: message[1],
-    timestamp: Date.now()
+    timestamp: Date.now(),
+    persist: !!persist
   };
   flashDeps.changed();
 
@@ -59,12 +60,12 @@ var flashSet = function (id, message, localTimeout) {
 };
 
 var flashStateFn = function (state) {
-  return function (id, message, localTimeout) {
+  return function (id, message, localTimeout, persist) {
     if (!message) {
       message = id;
       id = FLASH_DEFAULT_ID;
     }
-    return flashSet(id, [state, message], localTimeout);
+    return flashSet(id, [state, message], localTimeout, persist);
   };
 };
 
@@ -97,13 +98,22 @@ Meteor.startup(function () {
   injectRouter();
 });
 
+// Allow custom states
+Flash.registerStateFn = function (fnName, state) {
+  if (typeof(state) === 'undefined')
+    state = fnName;
 
+  if (typeof(Flash[fnName]) === 'undefined')
+    Flash[fnName] = flashStateFn(state);
+  else
+    console.error("Flash." + fnName + " cannot be registered, because it already exists.")
+};
 
-Flash.set = flashStateFn(Flash.config.defaultType);
-Flash.warning = flashStateFn('warning');
-Flash.success = flashStateFn('success');
-Flash.info = flashStateFn('info');
-Flash.danger = flashStateFn('danger');
+Flash.registerStateFn('set', Flash.config.defaultType);
+Flash.registerStateFn('warning');
+Flash.registerStateFn('success');
+Flash.registerStateFn('info');
+Flash.registerStateFn('danger');
 
 Flash.get = function (id) {
   flashDeps.depend();
@@ -117,12 +127,18 @@ Flash.clear = function (id) {
 
   if (!id) {
     for (key in messages) {
-      if (messages.hasOwnProperty(key)) {
-        messages[key] = null;
+      if (messages.hasOwnProperty(key) && messages[key]) {
+        if(messages[key].persist)
+          messages[key].persist = false;
+        else
+          messages[key] = null;
       }
     }
   } else {
-    messages[id] = null;
+    if (messages[id].persist)
+      messages[id].persist = false;
+    else
+      messages[id] = null;
   }
   flashDeps.changed();
 };
